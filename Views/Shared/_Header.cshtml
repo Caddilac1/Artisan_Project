@@ -1,0 +1,50 @@
+<header class="bg-white border-b border-secondary-200 sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center h-16">
+            <!-- Logo -->
+            <div class="flex items-center">
+                <div class="flex-shrink-0">
+                    <svg class="h-8 w-8 text-primary" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 2L2 7v10c0 5.55 3.84 10 9 11 1.16.21 2.34.21 3.5 0 5.16-1 9-5.45 9-11V7l-10-5z"/>
+                        <path d="M8 11h8M8 15h5"/>
+                    </svg>
+                </div>
+                <div class="ml-3">
+                    <h1 class="text-xl font-semibold text-text-primary">BlogCraft</h1>
+                </div>
+            </div>
+
+            <!-- Navigation -->
+            <nav class="hidden md:flex space-x-8">
+                <a asp-controller="Home" asp-action="Index" class="text-primary font-medium px-3 py-2 rounded-md bg-primary-50">Dashboard</a>
+                <a href="#" class="text-text-secondary hover:text-text-primary px-3 py-2 rounded-md hover:bg-secondary-100 transition-colors">Feed</a>
+                <a href="#" class="text-text-secondary hover:text-text-primary px-3 py-2 rounded-md hover:bg-secondary-100 transition-colors">My Posts</a>
+                <a href="#" class="text-text-secondary hover:text-text-primary px-3 py-2 rounded-md hover:bg-secondary-100 transition-colors">Profile</a>
+            </nav>
+
+            <!-- User Menu -->
+            <div class="flex items-center space-x-4">
+                <button class="p-2 text-text-secondary hover:text-text-primary rounded-full hover:bg-secondary-100 transition-colors">
+                    <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-5 5-5-5h5v-12"/>
+                    </svg>
+                </button>
+                <div class="flex items-center space-x-3">
+                    <img class="h-8 w-8 rounded-full object-cover" 
+                         src="https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg?auto=compress&cs=tinysrgb&w=400" 
+                         alt="User Avatar" loading="lazy" />
+                    <span class="text-sm font-medium text-text-primary">Sarah Johnson</span>
+                </div>
+            </div>
+
+            <!-- Mobile Menu -->
+            <div class="md:hidden">
+                <button type="button" class="p-2 rounded-md text-text-secondary hover:text-text-primary hover:bg-secondary-100 transition-colors">
+                    <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+</header>
