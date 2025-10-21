@@ -1,8 +1,11 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "User Dashboard";
+    Layout = "_Layout";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    @await Html.PartialAsync("_WelcomeSection")
+    @await Html.PartialAsync("_MetricsPanel")
+    @await Html.PartialAsync("_RecentPosts")
+    @await Html.PartialAsync("_Sidebar")
+</main>
