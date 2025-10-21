@@ -6,7 +6,7 @@ using ArtisanMarketplace.Models.Roles;
 namespace ArtisanMarketplace.Models
 {
     [Table("Users")]
-    public class User : IdentityUser<Guid>
+    public class AppUser : IdentityUser<Guid>
     {
         public User()
         {

@@ -1,5 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
+
 
 namespace ArtisanMarketplace.Models.Roles
 {
@@ -41,7 +43,7 @@ namespace ArtisanMarketplace.Models.Roles
         public bool IsActive { get; set; }
 
         [ForeignKey(nameof(UserId))]
-        public virtual User User { get; set; } = null!;
+        public virtual AppUser User { get; set; } = null!;
 
         // Abstract methods to be implemented by derived classes
         public abstract string GetRoleDisplayName();
