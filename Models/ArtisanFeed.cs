@@ -2,15 +2,13 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-
 namespace ArtisanMarketplace.Models
 {
-
     [Table("ArtisanFeeds")]
     [Index(nameof(Slug), IsUnique = true)]
     [Index(nameof(PostType), nameof(CreatedAt))]
     [Index(nameof(ServiceCategory), nameof(IsActive))]
-    public class ArtisanFeed
+    public partial class ArtisanFeed
     {
         public ArtisanFeed()
         {
@@ -31,66 +29,51 @@ namespace ArtisanMarketplace.Models
         }
 
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
 
-        // Foreign Key
         [Required]
         [Display(Name = "Artisan")]
         public Guid ArtisanId { get; set; }
 
-        [Required]
-        [StringLength(255)]
+        [Required, StringLength(255)]
         public string Title { get; set; } = string.Empty;
 
-        [Required]
-        [StringLength(255)]
+        [Required, StringLength(255)]
         [Display(Name = "URL Slug")]
         public string Slug { get; set; } = string.Empty;
 
-        [Required]
-        [DataType(DataType.MultilineText)]
+        [Required, DataType(DataType.MultilineText)]
         public string Description { get; set; } = string.Empty;
 
-        // Post Details
-        [Required]
-        [StringLength(20)]
+        [Required, StringLength(20)]
         [Display(Name = "Post Type")]
         public string PostType { get; set; }
 
-        [Required]
-        [StringLength(100)]
+        [Required, StringLength(100)]
         [Display(Name = "Service Category")]
         public string ServiceCategory { get; set; } = string.Empty;
 
-        // Media
-        [Required]
-        [StringLength(500)]
+        [Required, StringLength(500)]
         [Display(Name = "Featured Image Path")]
         public string FeaturedImage { get; set; } = string.Empty;
 
         [StringLength(500)]
-        [Display(Name = "Video URL")]
-        [Url]
+        [Display(Name = "Video URL"), Url]
         public string? VideoUrl { get; set; }
 
-        // Pricing (if applicable)
-        [Column(TypeName = "decimal(10,2)")]
-        [Range(0, double.MaxValue)]
+        [Column(TypeName = "decimal(10,2)"), Range(0, double.MaxValue)]
         public decimal? Price { get; set; }
 
         [Range(0, 100)]
         [Display(Name = "Discount Percentage")]
         public int? DiscountPercentage { get; set; }
 
-        // Validity (for promotions)
         [Display(Name = "Valid From")]
         public DateTime? ValidFrom { get; set; }
 
         [Display(Name = "Valid Until")]
         public DateTime? ValidUntil { get; set; }
 
-        // Engagement Metrics
         [Range(0, int.MaxValue)]
         [Display(Name = "Views Count")]
         public int ViewsCount { get; set; }
@@ -115,14 +98,12 @@ namespace ArtisanMarketplace.Models
         [Display(Name = "Shares Count")]
         public int SharesCount { get; set; }
 
-        // Timestamps
         [Display(Name = "Created At")]
         public DateTime CreatedAt { get; set; }
 
         [Display(Name = "Updated At")]
         public DateTime UpdatedAt { get; set; }
 
-        // Visibility and Moderation
         [Display(Name = "Is Active")]
         public bool IsActive { get; set; }
 
@@ -135,7 +116,6 @@ namespace ArtisanMarketplace.Models
         [Display(Name = "Is Flagged")]
         public bool IsFlagged { get; set; }
 
-        // Navigation Properties
         [ForeignKey(nameof(ArtisanId))]
         public virtual ArtisanProfile Artisan { get; set; } = null!;
 
@@ -143,7 +123,6 @@ namespace ArtisanMarketplace.Models
         public virtual ICollection<Reaction> Reactions { get; set; } = new List<Reaction>();
         public virtual ICollection<Report> Reports { get; set; } = new List<Report>();
 
-        // Helper Methods
         public string GetPostTypeDisplay()
         {
             return PostType switch
@@ -173,13 +152,8 @@ namespace ArtisanMarketplace.Models
                 return false;
 
             var now = DateTime.UtcNow;
-
-            if (ValidFrom.HasValue && ValidFrom.Value > now)
-                return false;
-
-            if (ValidUntil.HasValue && ValidUntil.Value < now)
-                return false;
-
+            if (ValidFrom.HasValue && ValidFrom.Value > now) return false;
+            if (ValidUntil.HasValue && ValidUntil.Value < now) return false;
             return true;
         }
 
@@ -197,66 +171,20 @@ namespace ArtisanMarketplace.Models
             return diff.Days > 0 ? diff.Days : 0;
         }
 
-        public void IncrementViews()
-        {
-            ViewsCount++;
-        }
+        public void IncrementViews() => ViewsCount++;
+        public void IncrementComments() => CommentsCount++;
+        public void DecrementComments() { if (CommentsCount > 0) CommentsCount--; }
+        public void IncrementLikes() => LikesCount++;
+        public void DecrementLikes() { if (LikesCount > 0) LikesCount--; }
+        public void IncrementDislikes() => DislikesCount++;
+        public void DecrementDislikes() { if (DislikesCount > 0) DislikesCount--; }
+        public void IncrementReports() => ReportsCount++;
+        public void IncrementShares() => SharesCount++;
+        public void UpdateTimestamp() => UpdatedAt = DateTime.UtcNow;
 
-        public void IncrementComments()
-        {
-            CommentsCount++;
-        }
-
-        public void DecrementComments()
-        {
-            if (CommentsCount > 0)
-                CommentsCount--;
-        }
-
-        public void IncrementLikes()
-        {
-            LikesCount++;
-        }
-
-        public void DecrementLikes()
-        {
-            if (LikesCount > 0)
-                LikesCount--;
-        }
-
-        public void IncrementDislikes()
-        {
-            DislikesCount++;
-        }
-
-        public void DecrementDislikes()
-        {
-            if (DislikesCount > 0)
-                DislikesCount--;
-        }
-
-        public void IncrementReports()
-        {
-            ReportsCount++;
-        }
-
-        public void IncrementShares()
-        {
-            SharesCount++;
-        }
-
-        public void UpdateTimestamp()
-        {
-            UpdatedAt = DateTime.UtcNow;
-        }
-
-        public override string ToString()
-        {
-            return $"{Title} by {Artisan?.BusinessName}";
-        }
+        public override string ToString() => $"{Title} by {Artisan?.BusinessName}";
     }
 
-    
     public static class PostTypes
     {
         public const string Service = "SERVICE";
@@ -265,10 +193,7 @@ namespace ArtisanMarketplace.Models
         public const string Tip = "TIP";
         public const string Announcement = "ANNOUNCEMENT";
 
-        public static readonly string[] AllTypes = 
-        {
-            Service, Promotion, Showcase, Tip, Announcement
-        };
+        public static readonly string[] AllTypes = { Service, Promotion, Showcase, Tip, Announcement };
 
         public static readonly Dictionary<string, string> TypeDisplayNames = new()
         {
@@ -281,13 +206,13 @@ namespace ArtisanMarketplace.Models
 
         public static bool IsValidType(string type)
         {
-            return AllTypes.Contains(type.ToUpper());
+            return !string.IsNullOrEmpty(type) && AllTypes.Contains(type.ToUpper());
         }
 
         public static string GetDisplayName(string type)
         {
-            return TypeDisplayNames.TryGetValue(type.ToUpper(), out var displayName) 
-                ? displayName 
+            return TypeDisplayNames.TryGetValue(type.ToUpper(), out var displayName)
+                ? displayName
                 : type;
         }
     }
