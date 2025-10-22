@@ -1,156 +1,45 @@
-using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
-namespace ArtisanMarketplace.Data
+namespace ArtisanMarketplace.Models
 {
-    public class ApplicationDbContext : DbContext
+    public partial class Comment
     {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
-            : base(options)
-        {
-        }
+        [Key]
+        public Guid Id { get; set; }
 
-        // DbSets
-        public DbSet<Comment> Comments { get; set; }
-        public DbSet<Reaction> Reactions { get; set; }
-        public DbSet<Report> Reports { get; set; }
-        
+        // User who made the comment
+        [Required]
+        public Guid UserId { get; set; }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            base.OnModelCreating(modelBuilder);
+        // Optional relationships
+        public Guid? UserFeedId { get; set; }
+        public Guid? ArtisanFeedId { get; set; }
+        public Guid? ParentCommentId { get; set; }
 
-            
-            modelBuilder.Entity<Comment>(entity =>
-            {
-                entity.HasKey(c => c.Id);
+        // Type of comment (enum or string)
+        [Required]
+        public string CommentType { get; set; } = string.Empty;
 
-                entity.HasIndex(c => new { c.CommentType, c.CreatedAt })
-                      .HasDatabaseName("IX_Comments_CommentType_CreatedAt");
+        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
-                // User relationship
-                entity.HasOne(c => c.User)
-                      .WithMany()
-                      .HasForeignKey(c => c.UserId)
-                      .OnDelete(DeleteBehavior.Cascade);
+        // Navigation properties
+        [ForeignKey(nameof(UserId))]
+        public virtual AppUser User { get; set; } = null!;
 
-                // UserFeed relationship (optional)
-                entity.HasOne(c => c.UserFeed)
-                      .WithMany(uf => uf.Comments)
-                      .HasForeignKey(c => c.UserFeedId)
-                      .OnDelete(DeleteBehavior.Cascade);
+        [ForeignKey(nameof(UserFeedId))]
+        public virtual UserFeed? UserFeed { get; set; }
 
-                entity.HasOne(c => c.ArtisanFeed)
-                      .WithMany(af => af.Comments)
-                      .HasForeignKey(c => c.ArtisanFeedId)
-                      .OnDelete(DeleteBehavior.Cascade);
+        [ForeignKey(nameof(ArtisanFeedId))]
+        public virtual ArtisanFeed? ArtisanFeed { get; set; }
 
-                // Self-referencing for replies
-                entity.HasOne(c => c.ParentComment)
-                      .WithMany(c => c.Replies)
-                      .HasForeignKey(c => c.ParentCommentId)
-                      .OnDelete(DeleteBehavior.Restrict); // Prevent cascade delete
+        [ForeignKey(nameof(ParentCommentId))]
+        public virtual Comment? ParentComment { get; set; }
 
-                // Convert enum to string in database
-                entity.Property(c => c.CommentType)
-                      .HasConversion<string>();
-            });
-
-
-            // ==================== Reaction Configuration ====================
-            
-            modelBuilder.Entity<Reaction>(entity =>
-            {
-                entity.HasKey(r => r.Id);
-
-                // Composite unique constraint to prevent duplicate reactions
-                entity.HasIndex(r => new { r.UserId, r.ContentType, r.UserFeedId, r.ArtisanFeedId, r.CommentId })
-                      .IsUnique()
-                      .HasDatabaseName("IX_Reactions_Unique");
-
-                // User relationship
-                entity.HasOne(r => r.User)
-                      .WithMany()
-                      .HasForeignKey(r => r.UserId)
-                      .OnDelete(DeleteBehavior.Cascade);
-
-                // UserFeed relationship (optional)
-                entity.HasOne(r => r.UserFeed)
-                      .WithMany(uf => uf.Reactions)
-                      .HasForeignKey(r => r.UserFeedId)
-                      .OnDelete(DeleteBehavior.Cascade);
-
-                // ArtisanFeed relationship (optional)
-                entity.HasOne(r => r.ArtisanFeed)
-                      .WithMany(af => af.Reactions)
-                      .HasForeignKey(r => r.ArtisanFeedId)
-                      .OnDelete(DeleteBehavior.Cascade);
-
-                // Comment relationship (optional)
-                entity.HasOne(r => r.Comment)
-                      .WithMany(c => c.Reactions)
-                      .HasForeignKey(r => r.CommentId)
-                      .OnDelete(DeleteBehavior.Cascade);
-
-                // Convert enums to strings in database
-                entity.Property(r => r.ReactionType)
-                      .HasConversion<string>();
-
-                entity.Property(r => r.ContentType)
-                      .HasConversion<string>();
-            });
-
-            
-            modelBuilder.Entity<Report>(entity =>
-            {
-                entity.HasKey(r => r.Id);
-
-                entity.HasIndex(r => new { r.Status, r.CreatedAt })
-                      .HasDatabaseName("IX_Reports_Status_CreatedAt");
-
-                // Reporter relationship
-                entity.HasOne(r => r.Reporter)
-                      .WithMany()
-                      .HasForeignKey(r => r.ReporterId)
-                      .OnDelete(DeleteBehavior.Cascade);
-
-
-                entity.HasOne(r => r.UserFeed)
-                      .WithMany(uf => uf.Reports)
-                      .HasForeignKey(r => r.UserFeedId)
-                      .OnDelete(DeleteBehavior.Cascade);
-
-                
-                entity.HasOne(r => r.ArtisanFeed)
-                      .WithMany(af => af.Reports)
-                      .HasForeignKey(r => r.ArtisanFeedId)
-                      .OnDelete(DeleteBehavior.Cascade);
-
-                entity.HasOne(r => r.Comment)
-                      .WithMany(c => c.Reports)
-                      .HasForeignKey(r => r.CommentId)
-                      .OnDelete(DeleteBehavior.Cascade);
-
-                entity.HasOne(r => r.ReportedUser)
-                      .WithMany()
-                      .HasForeignKey(r => r.ReportedUserId)
-                      .OnDelete(DeleteBehavior.Restrict); 
-
-            
-                entity.HasOne(r => r.ReviewedBy)
-                      .WithMany()
-                      .HasForeignKey(r => r.ReviewedById)
-                      .OnDelete(DeleteBehavior.Restrict); // Prevent cascade delete
-
-
-                entity.Property(r => r.Reason)
-                      .HasConversion<string>();
-
-                entity.Property(r => r.ContentType)
-                      .HasConversion<string>();
-
-                entity.Property(r => r.Status)
-                      .HasConversion<string>();
-            });
-        }
+        public virtual ICollection<Comment> Replies { get; set; } = new List<Comment>();
+        public virtual ICollection<Reaction> Reactions { get; set; } = new List<Reaction>();
+        public virtual ICollection<Report> Reports { get; set; } = new List<Report>();
     }
 }

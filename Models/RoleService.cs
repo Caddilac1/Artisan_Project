@@ -1,4 +1,8 @@
-namespace ArtisanMarketplace.Services
+using Artisan_Project.Data;
+using Microsoft.EntityFrameworkCore;
+
+
+namespace Artisan_Project.Data
 {
     using ArtisanMarketplace.Models.Roles;
 
@@ -44,8 +48,8 @@ namespace ArtisanMarketplace.Services
         public async Task<bool> UserHasRoleAsync(Guid userId, string roleType)
         {
             return await _context.Roles
-                .AnyAsync(r => r.UserId == userId 
-                    && r.RoleType.ToUpper() == roleType.ToUpper() 
+                .AnyAsync(r => r.UserId == userId
+                    && r.RoleType.ToUpper() == roleType.ToUpper()
                     && r.IsActive);
         }
 
@@ -113,7 +117,7 @@ namespace ArtisanMarketplace.Services
         public async Task<List<string>> GetUserPermissionsAsync(Guid userId)
         {
             var roles = await GetUserRolesAsync(userId);
-            
+
             var permissions = new HashSet<string>();
             foreach (var role in roles)
             {

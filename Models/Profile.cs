@@ -137,7 +137,7 @@ namespace ArtisanMarketplace.Models
 
         // Navigation Properties
         [ForeignKey(nameof(UserId))]
-        public virtual User User { get; set; } = null!;
+        public virtual AppUser User { get; set; } = null!;
 
         public virtual ICollection<ArtisanWork> PortfolioWorks { get; set; } = new List<ArtisanWork>();
         public virtual ICollection<ArtisanFeed> FeedPosts { get; set; } = new List<ArtisanFeed>();

@@ -3,12 +3,14 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using ArtisanMarketplace.Models.Roles;
 
+
+
 namespace ArtisanMarketplace.Models
 {
     [Table("Users")]
     public class AppUser : IdentityUser<Guid>
     {
-        public User()
+        public AppUser()
         {
             Id = Guid.NewGuid();
             DateJoined = DateTime.UtcNow;
@@ -16,6 +18,7 @@ namespace ArtisanMarketplace.Models
             IsActive = true;
             IsVerified = false;
         }
+
 
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]

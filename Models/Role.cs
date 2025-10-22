@@ -46,7 +46,7 @@ namespace ArtisanMarketplace.Models
 
         // Navigation Property
         [ForeignKey(nameof(UserId))]
-        public virtual User User { get; set; } = null!;
+        public virtual AppUser User { get; set; } = null!;
 
         // Helper Methods
         public string GetRoleDisplayName()
