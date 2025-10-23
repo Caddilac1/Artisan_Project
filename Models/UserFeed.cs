@@ -1,6 +1,8 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
+using Artisan_Project.Models;
+
 
 
 namespace ArtisanMarketplace.Models
@@ -153,7 +155,7 @@ namespace ArtisanMarketplace.Models
 
         // Navigation Properties
         [ForeignKey(nameof(UserId))]
-        public virtual User User { get; set; } = null!;
+        public virtual AppUser User { get; set; } = null!;
 
         public virtual ICollection<Comment> Comments { get; set; } = new List<Comment>();
         public virtual ICollection<Reaction> Reactions { get; set; } = new List<Reaction>();
@@ -257,79 +259,4 @@ namespace ArtisanMarketplace.Models
         }
     }
 
-    /// <summary>
-    /// Constants for Feed Status
-    /// </summary>
-    public static class FeedStatuses
-    {
-        public const string Open = "OPEN";
-        public const string InReview = "IN_REVIEW";
-        public const string Negotiating = "NEGOTIATING";
-        public const string Closed = "CLOSED";
-        public const string Completed = "COMPLETED";
-        public const string Cancelled = "CANCELLED";
-
-        public static readonly string[] AllStatuses = 
-        {
-            Open, InReview, Negotiating, Closed, Completed, Cancelled
-        };
-
-        public static readonly Dictionary<string, string> StatusDisplayNames = new()
-        {
-            { Open, "Open" },
-            { InReview, "In Review" },
-            { Negotiating, "Negotiating" },
-            { Closed, "Closed" },
-            { Completed, "Completed" },
-            { Cancelled, "Cancelled" }
-        };
-
-        public static bool IsValidStatus(string status)
-        {
-            return AllStatuses.Contains(status.ToUpper());
-        }
-
-        public static string GetDisplayName(string status)
-        {
-            return StatusDisplayNames.TryGetValue(status.ToUpper(), out var displayName) 
-                ? displayName 
-                : status;
-        }
-    }
-
-    /// <summary>
-    /// Constants for Priority Levels
-    /// </summary>
-    public static class PriorityLevels
-    {
-        public const string Low = "LOW";
-        public const string Medium = "MEDIUM";
-        public const string High = "HIGH";
-        public const string Urgent = "URGENT";
-
-        public static readonly string[] AllLevels = 
-        {
-            Low, Medium, High, Urgent
-        };
-
-        public static readonly Dictionary<string, string> LevelDisplayNames = new()
-        {
-            { Low, "Low" },
-            { Medium, "Medium" },
-            { High, "High" },
-            { Urgent, "Urgent" }
-        };
-
-        public static bool IsValidLevel(string level)
-        {
-            return AllLevels.Contains(level.ToUpper());
-        }
-
-        public static string GetDisplayName(string level)
-        {
-            return LevelDisplayNames.TryGetValue(level.ToUpper(), out var displayName) 
-                ? displayName 
-                : level;
-        }
-    }
 }

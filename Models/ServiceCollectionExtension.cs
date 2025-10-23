@@ -1,6 +1,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using ArtisanMarketplace.Services;
 
+
 namespace ArtisanMarketplace.Extensions
 {
     /// <summary>
@@ -19,26 +20,3 @@ namespace ArtisanMarketplace.Extensions
         }
     }
 }
-
-// In your Program.cs or Startup.cs, add this:
-/*
-using ArtisanMarketplace.Extensions;
-
-var builder = WebApplication.CreateBuilder(args);
-
-// Add services to the container
-builder.Services.AddControllers();
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-
-// Add role services
-builder.Services.AddRoleServices();
-
-var app = builder.Build();
-
-// Configure the HTTP request pipeline
-app.UseAuthentication();
-app.UseAuthorization();
-app.MapControllers();
-app.Run();
-*/

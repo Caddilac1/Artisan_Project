@@ -1,6 +1,8 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
+using Artisan_Project.Models;
+
 
 
 namespace ArtisanMarketplace.Models
@@ -189,7 +191,7 @@ namespace ArtisanMarketplace.Models
 
         // Navigation Properties
         [ForeignKey(nameof(UserId))]
-        public virtual User? User { get; set; }
+        public virtual AppUser? User { get; set; }
 
         [ForeignKey(nameof(ArtisanId))]
         public virtual ArtisanProfile? Artisan { get; set; }
@@ -207,10 +209,10 @@ namespace ArtisanMarketplace.Models
 
         public bool IsArtisanPost()
         {
-            return FeedType == FeedTypes.ArtisanService || 
-                   FeedType == FeedTypes.ArtisanPromotion || 
-                   FeedType == FeedTypes.ArtisanShowcase || 
-                   FeedType == FeedTypes.ArtisanTip || 
+            return FeedType == FeedTypes.ArtisanService ||
+                   FeedType == FeedTypes.ArtisanPromotion ||
+                   FeedType == FeedTypes.ArtisanShowcase ||
+                   FeedType == FeedTypes.ArtisanTip ||
                    FeedType == FeedTypes.ArtisanAnnouncement;
         }
 
@@ -270,7 +272,7 @@ namespace ArtisanMarketplace.Models
         {
             if (IsUserJobRequest())
                 return Deadline.HasValue && Deadline.Value < DateTime.UtcNow;
-            
+
             if (FeedType == FeedTypes.ArtisanPromotion)
                 return ValidUntil.HasValue && ValidUntil.Value < DateTime.UtcNow;
 
@@ -376,7 +378,7 @@ namespace ArtisanMarketplace.Models
         public const string ArtisanTip = "ARTISAN_TIP";
         public const string ArtisanAnnouncement = "ARTISAN_ANNOUNCEMENT";
 
-        public static readonly string[] AllTypes = 
+        public static readonly string[] AllTypes =
         {
             UserJobRequest,
             ArtisanService,
@@ -387,14 +389,14 @@ namespace ArtisanMarketplace.Models
         };
 
         public static readonly string[] UserTypes = { UserJobRequest };
-        
-        public static readonly string[] ArtisanTypes = 
-        { 
-            ArtisanService, 
-            ArtisanPromotion, 
-            ArtisanShowcase, 
-            ArtisanTip, 
-            ArtisanAnnouncement 
+
+        public static readonly string[] ArtisanTypes =
+        {
+            ArtisanService,
+            ArtisanPromotion,
+            ArtisanShowcase,
+            ArtisanTip,
+            ArtisanAnnouncement
         };
 
         public static readonly Dictionary<string, string> TypeDisplayNames = new()
@@ -424,85 +426,10 @@ namespace ArtisanMarketplace.Models
 
         public static string GetDisplayName(string type)
         {
-            return TypeDisplayNames.TryGetValue(type.ToUpper(), out var displayName) 
-                ? displayName 
+            return TypeDisplayNames.TryGetValue(type.ToUpper(), out var displayName)
+                ? displayName
                 : type;
         }
     }
 
-    /// <summary>
-    /// Constants for Feed Status (mainly for user job requests)
-    /// </summary>
-    public static class FeedStatuses
-    {
-        public const string Open = "OPEN";
-        public const string InReview = "IN_REVIEW";
-        public const string Negotiating = "NEGOTIATING";
-        public const string Closed = "CLOSED";
-        public const string Completed = "COMPLETED";
-        public const string Cancelled = "CANCELLED";
-
-        public static readonly string[] AllStatuses = 
-        {
-            Open, InReview, Negotiating, Closed, Completed, Cancelled
-        };
-
-        public static readonly Dictionary<string, string> StatusDisplayNames = new()
-        {
-            { Open, "Open" },
-            { InReview, "In Review" },
-            { Negotiating, "Negotiating" },
-            { Closed, "Closed" },
-            { Completed, "Completed" },
-            { Cancelled, "Cancelled" }
-        };
-
-        public static bool IsValidStatus(string status)
-        {
-            return AllStatuses.Contains(status.ToUpper());
-        }
-
-        public static string GetDisplayName(string status)
-        {
-            return StatusDisplayNames.TryGetValue(status.ToUpper(), out var displayName) 
-                ? displayName 
-                : status;
-        }
-    }
-
-    /// <summary>
-    /// Constants for Priority Levels (mainly for user job requests)
-    /// </summary>
-    public static class PriorityLevels
-    {
-        public const string Low = "LOW";
-        public const string Medium = "MEDIUM";
-        public const string High = "HIGH";
-        public const string Urgent = "URGENT";
-
-        public static readonly string[] AllLevels = 
-        {
-            Low, Medium, High, Urgent
-        };
-
-        public static readonly Dictionary<string, string> LevelDisplayNames = new()
-        {
-            { Low, "Low" },
-            { Medium, "Medium" },
-            { High, "High" },
-            { Urgent, "Urgent" }
-        };
-
-        public static bool IsValidLevel(string level)
-        {
-            return AllLevels.Contains(level.ToUpper());
-        }
-
-        public static string GetDisplayName(string level)
-        {
-            return LevelDisplayNames.TryGetValue(level.ToUpper(), out var displayName) 
-                ? displayName 
-                : level;
-        }
-    }
 }
