@@ -1,27 +1,39 @@
-// ArtisanMarketplace/Models/Roles/Permissions.cs
+using System.Collections.Generic;
+
 namespace ArtisanMarketplace.Models.Roles
 {
     public static class Permissions
     {
+        // ===================== BASIC USER PERMISSIONS =====================
         public static readonly List<string> BasicUserPermissions = new()
         {
             "ViewProfile",
             "EditProfile",
-            "BrowseMarketplace"
+            "BrowseMarketplace",
+            "CreateBooking",
+            "ViewBookingRequests",
+            "AcceptBooking"
         };
 
-        public static readonly List<string> AdminPermissions = new()
-        {
-            "ManageUsers",
-            "ApproveListings",
-            "BanUsers"
-        };
-
+        // ===================== ARTISAN PERMISSIONS =====================
         public static readonly List<string> ArtisanPermissions = new()
         {
             "CreateListing",
             "EditListing",
-            "ViewOrders"
+            "ViewOrders",
+            "AcceptBooking",
+            "ViewBookingRequests"
+        };
+
+        // ===================== ADMIN PERMISSIONS =====================
+        public static readonly List<string> AdminPermissions = new()
+        {
+            "ManageUsers",
+            "ApproveListings",
+            "BanUsers",
+            "ViewOrders",
+            "CreateListing",
+            "EditListing"
         };
     }
 }

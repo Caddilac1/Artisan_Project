@@ -1,3 +1,4 @@
+
 namespace ArtisanMarketplace.Models.Roles
 {
     /// <summary>
