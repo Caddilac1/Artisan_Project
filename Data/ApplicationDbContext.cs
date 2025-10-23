@@ -4,8 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace Artisan_Project.Data
-
+namespace ArtisanMarketplace.Data
 {
     public class ApplicationDbContext : IdentityDbContext<AppUser, IdentityRole<Guid>, Guid>
     {
