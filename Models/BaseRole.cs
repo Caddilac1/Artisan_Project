@@ -1,63 +1,29 @@
+using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.EntityFrameworkCore;
-
 
 namespace ArtisanMarketplace.Models.Roles
 {
-    /// <summary>
-    /// Base role model for all user roles
-    /// </summary>
-    [Table("Roles")]
-    [Index(nameof(UserId), nameof(RoleType), IsUnique = true)]
     public abstract class BaseRole
     {
-        protected BaseRole()
-        {
-            Id = Guid.NewGuid();
-            AssignedDate = DateTime.UtcNow;
-            IsActive = true;
-            IsPrimary = false;
-        }
-
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public Guid Id { get; set; }
+        public Guid Id { get; set; } = Guid.NewGuid();
 
-        [Required]
-        [Display(Name = "User")]
-        public Guid UserId { get; set; }
-
-        [Required]
-        [StringLength(20)]
-        [Display(Name = "Role Type")]
+        public Guid UserId { get; set; }   // Add this if it’s not already there
         public string RoleType { get; set; } = string.Empty;
+        public bool IsActive { get; set; } = true;
+        public bool IsPrimary { get; set; } = false;
 
-        [Display(Name = "Is Primary Role")]
-        public bool IsPrimary { get; set; }
+        // ✅ NEW: when the role was assigned
+        public DateTime AssignedDate { get; set; } = DateTime.UtcNow;
 
-        [Display(Name = "Assigned Date")]
-        public DateTime AssignedDate { get; set; }
-
-        [Display(Name = "Is Active")]
-        public bool IsActive { get; set; }
-
-        [ForeignKey(nameof(UserId))]
-        public virtual AppUser User { get; set; } = null!;
-
-        // Abstract methods to be implemented by derived classes
         public abstract string GetRoleDisplayName();
         public abstract List<string> GetPermissions();
         public abstract int GetPriorityLevel();
 
-        public virtual bool HasPermission(string permission)
+        public bool HasPermission(string permission)
         {
             return GetPermissions().Contains(permission);
-        }
-
-        public override string ToString()
-        {
-            return $"{User?.FullName} - {GetRoleDisplayName()}";
         }
     }
 }

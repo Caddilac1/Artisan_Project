@@ -3,6 +3,7 @@ using ArtisanMarketplace.Models.Roles;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Artisan_Project.Models;
 
 namespace ArtisanMarketplace.Data
 {
@@ -14,27 +15,52 @@ namespace ArtisanMarketplace.Data
         }
 
         // ------------------- DbSets -------------------
+        public DbSet<BaseRole> BaseRoles { get; set; }
+        public DbSet<ArtisanRole> ArtisanRoles { get; set; }
+        public DbSet<AdminRole> AdminRoles { get; set; }
+        public DbSet<ModeratorRole> ModeratorRoles { get; set; }
+
+        public DbSet<Role> Roles { get; set; }
+
+        public DbSet<ArtisanProfile> ArtisanProfiles { get; set; }
         public DbSet<ArtisanFeed> ArtisanFeeds { get; set; }
         public DbSet<ArtisanWork> ArtisanWorks { get; set; }
-        public DbSet<BaseRole> BaseRoles { get; set; }
-        public DbSet<Role> Roles { get; set; }
+        public DbSet<ArtisanProposal> ArtisanProposals { get; set; }
+
+        public DbSet<UserFeed> UserFeeds { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Reaction> Reactions { get; set; }
         public DbSet<Report> Reports { get; set; }
-        public DbSet<UserFeed> UserFeeds { get; set; }
-        public DbSet<ArtisanProfile> ArtisanProfiles { get; set; }
 
         // ------------------- Model Configuration -------------------
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            base.OnModelCreating(builder); // Identity configuration must come first
+            base.OnModelCreating(builder); // required for Identity
 
-            // ------------------- BaseRole configuration -------------------
-            builder.Entity<BaseRole>()
-                .HasIndex(r => new { r.UserId, r.RoleType })
-                .IsUnique();
+            // ------------------- BaseRole Configuration -------------------
+            builder.Entity<BaseRole>(entity =>
+            {
+                entity.HasKey(r => r.Id);
+                entity.HasIndex(r => new { r.UserId, r.RoleType }).IsUnique();
 
-            // ------------------- Comment configuration -------------------
+                entity.HasOne<AppUser>()
+                      .WithMany(u => u.Roles)
+                      .HasForeignKey("UserId")
+                      .OnDelete(DeleteBehavior.Cascade);
+            });
+
+            // ------------------- ArtisanProfile -------------------
+            builder.Entity<ArtisanProfile>(entity =>
+            {
+                entity.HasKey(a => a.Id);
+
+                entity.HasOne<AppUser>()
+                      .WithOne(u => u.ArtisanProfile)
+                      .HasForeignKey<ArtisanProfile>(a => a.UserId)
+                      .OnDelete(DeleteBehavior.Cascade);
+            });
+
+            // ------------------- Comment Configuration -------------------
             builder.Entity<Comment>(entity =>
             {
                 entity.HasKey(c => c.Id);
@@ -62,11 +88,10 @@ namespace ArtisanMarketplace.Data
                       .HasForeignKey(c => c.ParentCommentId)
                       .OnDelete(DeleteBehavior.Restrict);
 
-                entity.Property(c => c.CommentType)
-                      .HasConversion<string>();
+                entity.Property(c => c.CommentType).HasConversion<string>();
             });
 
-            // ------------------- Reaction configuration -------------------
+            // ------------------- Reaction Configuration -------------------
             builder.Entity<Reaction>(entity =>
             {
                 entity.HasKey(r => r.Id);
@@ -95,14 +120,11 @@ namespace ArtisanMarketplace.Data
                       .HasForeignKey(r => r.CommentId)
                       .OnDelete(DeleteBehavior.Cascade);
 
-                entity.Property(r => r.ReactionType)
-                      .HasConversion<string>();
-
-                entity.Property(r => r.ContentType)
-                      .HasConversion<string>();
+                entity.Property(r => r.ReactionType).HasConversion<string>();
+                entity.Property(r => r.ContentType).HasConversion<string>();
             });
 
-            // ------------------- Report configuration -------------------
+            // ------------------- Report Configuration -------------------
             builder.Entity<Report>(entity =>
             {
                 entity.HasKey(r => r.Id);
@@ -111,7 +133,7 @@ namespace ArtisanMarketplace.Data
                       .HasDatabaseName("IX_Reports_Status_CreatedAt");
 
                 entity.HasOne(r => r.Reporter)
-                      .WithMany()
+                      .WithMany(u => u.ReportsMade)
                       .HasForeignKey(r => r.ReporterId)
                       .OnDelete(DeleteBehavior.Cascade);
 
@@ -131,23 +153,29 @@ namespace ArtisanMarketplace.Data
                       .OnDelete(DeleteBehavior.Cascade);
 
                 entity.HasOne(r => r.ReportedUser)
-                      .WithMany()
+                      .WithMany(u => u.ReportsReceived)
                       .HasForeignKey(r => r.ReportedUserId)
                       .OnDelete(DeleteBehavior.Restrict);
 
                 entity.HasOne(r => r.ReviewedBy)
-                      .WithMany()
+                      .WithMany(u => u.ReportsReviewed)
                       .HasForeignKey(r => r.ReviewedById)
                       .OnDelete(DeleteBehavior.Restrict);
 
-                entity.Property(r => r.Reason)
-                      .HasConversion<string>();
+                entity.Property(r => r.Reason).HasConversion<string>();
+                entity.Property(r => r.ContentType).HasConversion<string>();
+                entity.Property(r => r.Status).HasConversion<string>();
+            });
 
-                entity.Property(r => r.ContentType)
-                      .HasConversion<string>();
+            // ------------------- ArtisanWork -------------------
+            builder.Entity<ArtisanWork>(entity =>
+            {
+                entity.HasKey(a => a.Id);
 
-                entity.Property(r => r.Status)
-                      .HasConversion<string>();
+                entity.HasOne(a => a.Artisan)
+                      .WithMany()
+                      .HasForeignKey(a => a.ArtisanId)
+                      .OnDelete(DeleteBehavior.Cascade);
             });
         }
     }

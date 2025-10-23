@@ -3,8 +3,6 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using ArtisanMarketplace.Models.Roles;
 
-
-
 namespace ArtisanMarketplace.Models
 {
     [Table("Users")]
@@ -19,7 +17,6 @@ namespace ArtisanMarketplace.Models
             IsVerified = false;
         }
 
-
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public override Guid Id { get; set; }
@@ -31,7 +28,7 @@ namespace ArtisanMarketplace.Models
 
         [Phone]
         [StringLength(17)]
-        [RegularExpression(@"^\+?1?\d{9,15}$", 
+        [RegularExpression(@"^\+?1?\d{9,15}$",
             ErrorMessage = "Phone number must be entered in the format: '+999999999'. Up to 15 digits allowed.")]
         public override string? PhoneNumber { get; set; }
 
@@ -87,7 +84,7 @@ namespace ArtisanMarketplace.Models
         public virtual ICollection<Report> ReportsReceived { get; set; } = new List<Report>();
         public virtual ICollection<Report> ReportsReviewed { get; set; } = new List<Report>();
 
-        // Helper Methods for Roles
+        // === ROLE HELPERS ===
         public BaseRole? GetPrimaryRole()
         {
             return Roles.FirstOrDefault(r => r.IsPrimary && r.IsActive);
@@ -100,7 +97,7 @@ namespace ArtisanMarketplace.Models
 
         public bool HasRole(string roleType)
         {
-            return Roles.Any(r => r.RoleType.Equals(roleType, StringComparison.OrdinalIgnoreCase) 
+            return Roles.Any(r => r.RoleType.Equals(roleType, StringComparison.OrdinalIgnoreCase)
                 && r.IsActive);
         }
 
@@ -122,62 +119,23 @@ namespace ArtisanMarketplace.Models
             return permissions.ToList();
         }
 
-        public bool IsAdmin()
-        {
-            return HasRole(RoleTypes.Admin);
-        }
+        public bool IsAdmin() => HasRole(RoleTypes.Admin);
 
-        public bool IsModerator()
-        {
-            return HasRole(RoleTypes.Moderator);
-        }
+        public bool IsModerator() => HasRole(RoleTypes.Moderator);
 
         public bool IsArtisan()
         {
-            return Roles.Any(r => r.IsActive && 
-                (r.RoleType == RoleTypes.Artisan ||
-                 r.RoleType == RoleTypes.Mason ||
-                 r.RoleType == RoleTypes.Plumber ||
-                 r.RoleType == RoleTypes.Electrician ||
-                 r.RoleType == RoleTypes.Carpenter ||
-                 r.RoleType == RoleTypes.Painter ||
-                 r.RoleType == RoleTypes.Tiler ||
-                 r.RoleType == RoleTypes.Roofer));
+            return Roles.Any(r => r.IsActive && r.RoleType == RoleTypes.Artisan);
         }
 
         public List<string> GetArtisanSpecializations()
         {
             var specializations = new List<string>();
-            
+
             foreach (var role in Roles.Where(r => r.IsActive))
             {
-                switch (role)
-                {
-                    case PlumberRole plumber:
-                        specializations.AddRange(plumber.Specializations);
-                        break;
-                    case ElectricianRole electrician:
-                        specializations.AddRange(electrician.Specializations);
-                        break;
-                    case MasonRole mason:
-                        specializations.AddRange(mason.Specializations);
-                        break;
-                    case CarpenterRole carpenter:
-                        specializations.AddRange(carpenter.Specializations);
-                        break;
-                    case PainterRole painter:
-                        specializations.AddRange(painter.Specializations);
-                        break;
-                    case TilerRole tiler:
-                        specializations.AddRange(tiler.Specializations);
-                        break;
-                    case RooferRole roofer:
-                        specializations.AddRange(roofer.Specializations);
-                        break;
-                    case ArtisanRole artisan:
-                        specializations.AddRange(artisan.Specializations);
-                        break;
-                }
+                if (role is ArtisanRole artisan)
+                    specializations.AddRange(artisan.Specializations);
             }
 
             return specializations.Distinct().ToList();
@@ -191,13 +149,12 @@ namespace ArtisanMarketplace.Models
 
             var primaryRole = GetPrimaryRole();
             if (primaryRole != null)
-                return $"{primaryRole.GetRoleDisplayName()} (Primary)" + 
+                return $"{primaryRole.GetRoleDisplayName()} (Primary)" +
                        (activeRoles.Count > 1 ? $" +{activeRoles.Count - 1} more" : "");
 
             return string.Join(", ", activeRoles.Select(r => r.GetRoleDisplayName()));
         }
 
-        // Address Helper
         public string GetFullAddress()
         {
             var addressParts = new[] { Address, City, State, Country, PostalCode }
@@ -210,7 +167,6 @@ namespace ArtisanMarketplace.Models
             return $"{FullName} ({Email}) - {GetRolesSummary()}";
         }
 
-        // Update timestamp on save
         public void UpdateTimestamp()
         {
             LastUpdated = DateTime.UtcNow;
