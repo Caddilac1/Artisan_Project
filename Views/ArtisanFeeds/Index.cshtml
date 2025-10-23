@@ -1,0 +1,173 @@
+@model IEnumerable<ArtisanMarketplace.Models.ArtisanFeed>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Slug)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PostType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ServiceCategory)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FeaturedImage)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VideoUrl)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Price)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DiscountPercentage)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ValidFrom)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ValidUntil)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ViewsCount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CommentsCount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LikesCount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DislikesCount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ReportsCount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SharesCount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreatedAt)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UpdatedAt)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsActive)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsFeatured)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsPromoted)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsFlagged)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Artisan)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Slug)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PostType)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ServiceCategory)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FeaturedImage)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VideoUrl)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DiscountPercentage)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ValidFrom)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ValidUntil)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ViewsCount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CommentsCount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LikesCount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DislikesCount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ReportsCount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SharesCount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedAt)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UpdatedAt)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsActive)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsFeatured)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsPromoted)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsFlagged)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Artisan.AvailabilityStatus)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
