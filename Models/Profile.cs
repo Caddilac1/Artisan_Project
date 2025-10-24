@@ -3,11 +3,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 using Artisan_Project.Models;
 
-
-
 namespace ArtisanMarketplace.Models
 {
-
     [Table("ArtisanProfiles")]
     [Index(nameof(Slug), IsUnique = true)]
     public class ArtisanProfile
@@ -145,6 +142,17 @@ namespace ArtisanMarketplace.Models
         public virtual ICollection<ArtisanFeed> FeedPosts { get; set; } = new List<ArtisanFeed>();
         public virtual ICollection<ArtisanProposal> Proposals { get; set; } = new List<ArtisanProposal>();
 
+        // === Added properties to match AccountController ===
+        [StringLength(255)]
+        public string? ArtisanSpeciality { get; set; }
+
+        [DataType(DataType.MultilineText)]
+        public string? ProfessionalBio { get; set; }
+
+        [StringLength(500)]
+        public string? BusinessAddress { get; set; }
+
+        // Helper Methods
         public List<string> GetServicesAsList()
         {
             return ServicesOffered
@@ -200,7 +208,6 @@ namespace ArtisanMarketplace.Models
         }
     }
 
-    
     public static class ExperienceLevels
     {
         public const string Beginner = "BEGINNER";
@@ -208,7 +215,7 @@ namespace ArtisanMarketplace.Models
         public const string Experienced = "EXPERIENCED";
         public const string Expert = "EXPERT";
 
-        public static readonly string[] AllLevels = 
+        public static readonly string[] AllLevels =
         {
             Beginner, Intermediate, Experienced, Expert
         };
@@ -228,20 +235,19 @@ namespace ArtisanMarketplace.Models
 
         public static string GetDisplayName(string level)
         {
-            return LevelDisplayNames.TryGetValue(level.ToUpper(), out var displayName) 
-                ? displayName 
+            return LevelDisplayNames.TryGetValue(level.ToUpper(), out var displayName)
+                ? displayName
                 : level;
         }
     }
 
-    
     public static class AvailabilityStatuses
     {
         public const string Available = "AVAILABLE";
         public const string Busy = "BUSY";
         public const string Unavailable = "UNAVAILABLE";
 
-        public static readonly string[] AllStatuses = 
+        public static readonly string[] AllStatuses =
         {
             Available, Busy, Unavailable
         };
@@ -260,8 +266,8 @@ namespace ArtisanMarketplace.Models
 
         public static string GetDisplayName(string status)
         {
-            return StatusDisplayNames.TryGetValue(status.ToUpper(), out var displayName) 
-                ? displayName 
+            return StatusDisplayNames.TryGetValue(status.ToUpper(), out var displayName)
+                ? displayName
                 : status;
         }
     }
