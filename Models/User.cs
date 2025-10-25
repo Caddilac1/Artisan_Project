@@ -41,6 +41,14 @@ namespace ArtisanMarketplace.Models
         [Display(Name = "Profile Picture Path")]
         public string? ProfilePicture { get; set; }
 
+        [NotMapped]
+        public string ProfileImageUrl
+        {
+            get => string.IsNullOrEmpty(ProfilePicture)
+                ? "/images/default-avatar.png"
+                : ProfilePicture;
+        }
+
         [Display(Name = "Date Joined")]
         public DateTime DateJoined { get; set; }
 
@@ -73,6 +81,12 @@ namespace ArtisanMarketplace.Models
         [StringLength(20)]
         [Display(Name = "Postal Code")]
         public string? PostalCode { get; set; }
+
+        public string? DisplayName { get; set; }
+        public string? ProfileImage { get; set; }
+        public string? Twitter { get; set; }
+        public string? GitHub { get; set; }
+        public string? LinkedIn { get; set; }
 
         // Navigation Properties
         public virtual ICollection<BaseRole> Roles { get; set; } = new List<BaseRole>();

@@ -1,0 +1,76 @@
+                <!-- Account Settings -->
+                <div class="card p-6">
+                    <h2 class="text-lg font-semibold text-text-primary mb-6">Account Settings</h2>
+                    
+                    <!-- Email Address -->
+                    <div class="mb-6">
+                        <label for="email" class="block text-sm font-medium text-text-primary mb-2">Email Address</label>
+                        <div class="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-3">
+                            <input type="email" id="email" value="sarah.johnson@email.com" class="input flex-1 px-4 py-3 text-text-primary" />
+                            <button class="inline-flex items-center px-4 py-2 border border-secondary-300 text-text-secondary font-medium rounded-lg hover:bg-secondary-100 transition-colors btn-scale">
+                                Verify
+                            </button>
+                        </div>
+                        <p class="mt-1 text-sm text-text-secondary">We'll send a verification email to confirm changes.</p>
+                    </div>
+
+                    <!-- Password Change -->
+                    <div class="mb-6">
+                        <h3 class="text-sm font-medium text-text-primary mb-4">Change Password</h3>
+                        <div class="space-y-4">
+                            <div>
+                                <label for="currentPassword" class="block text-sm font-medium text-text-primary mb-2">Current Password</label>
+                                <input type="password" id="currentPassword" class="input w-full px-4 py-3 text-text-primary placeholder-text-secondary" placeholder="Enter current password" />
+                            </div>
+                            <div>
+                                <label for="newPassword" class="block text-sm font-medium text-text-primary mb-2">New Password</label>
+                                <input type="password" id="newPassword" class="input w-full px-4 py-3 text-text-primary placeholder-text-secondary" placeholder="Enter new password" />
+                                <div class="mt-2">
+                                    <div class="flex items-center space-x-2 text-sm">
+                                        <div class="flex space-x-1">
+                                            <div class="w-2 h-2 bg-success rounded-full"></div>
+                                            <div class="w-2 h-2 bg-success rounded-full"></div>
+                                            <div class="w-2 h-2 bg-secondary-300 rounded-full"></div>
+                                            <div class="w-2 h-2 bg-secondary-300 rounded-full"></div>
+                                        </div>
+                                        <span class="text-text-secondary">Medium strength</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <label for="confirmPassword" class="block text-sm font-medium text-text-primary mb-2">Confirm New Password</label>
+                                <input type="password" id="confirmPassword" class="input w-full px-4 py-3 text-text-primary placeholder-text-secondary" placeholder="Confirm new password" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Preferences -->
+                    <div>
+                        <h3 class="text-sm font-medium text-text-primary mb-4">Preferences</h3>
+                        <div class="space-y-4">
+                            <!-- Timezone -->
+                            <div>
+                                <label for="timezone" class="block text-sm font-medium text-text-primary mb-2">Timezone</label>
+                                <select id="timezone" class="input w-full px-4 py-3 text-text-primary">
+                                    <option>UTC-08:00 Pacific Time (US & Canada)</option>
+                                    <option>UTC-05:00 Eastern Time (US & Canada)</option>
+                                    <option>UTC+00:00 Greenwich Mean Time</option>
+                                    <option>UTC+01:00 Central European Time</option>
+                                </select>
+                            </div>
+                            
+                            <!-- Language -->
+                            <div>
+                                <label for="language" class="block text-sm font-medium text-text-primary mb-2">Language</label>
+                                <select id="language" class="input w-full px-4 py-3 text-text-primary">
+                                    <option>English (US)</option>
+                                    <option>English (UK)</option>
+                                    <option>Spanish</option>
+                                    <option>French</option>
+                                    <option>German</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
