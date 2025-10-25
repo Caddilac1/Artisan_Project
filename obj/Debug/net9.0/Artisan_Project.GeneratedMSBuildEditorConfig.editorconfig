@@ -56,26 +56,6 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXJ0aXNhbkZlZWRzXEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/DELL/Documents/Contrator_Project/Artisan_Project/Views/ArtisanProfiles/Create.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXJ0aXNhblByb2ZpbGVzXENyZWF0ZS5jc2h0bWw=
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/DELL/Documents/Contrator_Project/Artisan_Project/Views/ArtisanProfiles/Delete.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXJ0aXNhblByb2ZpbGVzXERlbGV0ZS5jc2h0bWw=
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/DELL/Documents/Contrator_Project/Artisan_Project/Views/ArtisanProfiles/Details.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXJ0aXNhblByb2ZpbGVzXERldGFpbHMuY3NodG1s
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/DELL/Documents/Contrator_Project/Artisan_Project/Views/ArtisanProfiles/Edit.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXJ0aXNhblByb2ZpbGVzXEVkaXQuY3NodG1s
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/DELL/Documents/Contrator_Project/Artisan_Project/Views/ArtisanProfiles/Index.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXJ0aXNhblByb2ZpbGVzXEluZGV4LmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = 
-
 [C:/Users/DELL/Documents/Contrator_Project/Artisan_Project/Views/ArtisanWorks/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXJ0aXNhbldvcmtzXENyZWF0ZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
@@ -122,6 +102,50 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/DELL/Documents/Contrator_Project/Artisan_Project/Views/Home/Privacy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/DELL/Documents/Contrator_Project/Artisan_Project/Views/Profiles/Components/_ProfileActions.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvZmlsZXNcQ29tcG9uZW50c1xfUHJvZmlsZUFjdGlvbnMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/DELL/Documents/Contrator_Project/Artisan_Project/Views/Profiles/Components/_ProfileHeaderAction.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvZmlsZXNcQ29tcG9uZW50c1xfUHJvZmlsZUhlYWRlckFjdGlvbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/DELL/Documents/Contrator_Project/Artisan_Project/Views/Profiles/Components/_ProfileInfoSection.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvZmlsZXNcQ29tcG9uZW50c1xfUHJvZmlsZUluZm9TZWN0aW9uLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/DELL/Documents/Contrator_Project/Artisan_Project/Views/Profiles/Components/_ProfileNotificationSettings.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvZmlsZXNcQ29tcG9uZW50c1xfUHJvZmlsZU5vdGlmaWNhdGlvblNldHRpbmdzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/DELL/Documents/Contrator_Project/Artisan_Project/Views/Profiles/Components/_ProfileSecurity.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvZmlsZXNcQ29tcG9uZW50c1xfUHJvZmlsZVNlY3VyaXR5LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/DELL/Documents/Contrator_Project/Artisan_Project/Views/Profiles/Components/_ProfileSettings.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvZmlsZXNcQ29tcG9uZW50c1xfUHJvZmlsZVNldHRpbmdzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/DELL/Documents/Contrator_Project/Artisan_Project/Views/Profiles/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvZmlsZXNcQ3JlYXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/DELL/Documents/Contrator_Project/Artisan_Project/Views/Profiles/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvZmlsZXNcRGVsZXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/DELL/Documents/Contrator_Project/Artisan_Project/Views/Profiles/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvZmlsZXNcRGV0YWlscy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/DELL/Documents/Contrator_Project/Artisan_Project/Views/Profiles/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvZmlsZXNcRWRpdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/DELL/Documents/Contrator_Project/Artisan_Project/Views/Profiles/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvZmlsZXNcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/DELL/Documents/Contrator_Project/Artisan_Project/Views/Reactions/Create.cshtml]
