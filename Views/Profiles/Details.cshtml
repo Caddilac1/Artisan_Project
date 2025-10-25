@@ -1,0 +1,16 @@
+@model ArtisanMarketplace.Models.AppUser
+
+@{
+    ViewData["Title"] = "Profile Details - Artisan Marketplace";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="min-h-screen bg-gray-50 dark:bg-gray-900">
+        <!-- Profile-specific components -->
+        @await Html.PartialAsync("Components/_ProfileHeaderAction", Model)
+        @await Html.PartialAsync("Components/_ProfileInfoSection", Model)
+        @await Html.PartialAsync("Components/_ProfileSettings", Model)
+        @await Html.PartialAsync("Components/_ProfileNotificationSettings", Model)
+        @await Html.PartialAsync("Components/_ProfileSecurity", Model)
+        @await Html.PartialAsync("Components/_ProfileActions", Model)
+
